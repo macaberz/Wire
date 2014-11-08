@@ -1,6 +1,6 @@
 import sys.path as path
-path.append("D:\Workspaces\java\PyAutomaton2D\\bin")
-path.append("D:\Workspaces\java\PyAutomaton2D\\assets\scripts")
+path.append("/Users/renskloosterhuis/Documents/git/Wire/PyAutomaton2D/bin")
+path.append("/Users/renskloosterhuis/Documents/git/Wire/PyAutomaton2D/assets/scripts")
 
 from net.mmcprojects.automaton import Game
 from net.mmcprojects.automaton.entity import Entity
@@ -48,7 +48,7 @@ def onGameStart():
 	textTransform = TransformComponent(textPosition, textScale, 0)
 	text = Text("texttag", "Hallo", "Times New Roman", textTransform)
 
-	tp = TextureUnpacker("D:\Workspaces\java\PyAutomaton2D\\assets\\textures\output.xml")
+	tp = TextureUnpacker("/Users/renskloosterhuis/Documents/git/Wire/PyAutomaton2D/assets/textures/output.xml")
  	sprite = tp.getSprite("HUD_corner_bottom_left.png")
  	Game.addEntity(sprite)
  	Game.addEntity(text)
@@ -57,7 +57,7 @@ def update():
 	global sprite
 	global text
 	if (Input.getKey(Keyboard.KEY_D)):
-		sprite.transform.translate(0.5, 0.0)
+		sprite.transform.translate(4.0, 0.0)
 	elif (Input.getKey(Keyboard.KEY_A)):
 		sprite.transform.translate(-0.5, 0.0)
 	elif (Input.getKey(Keyboard.KEY_W)):
