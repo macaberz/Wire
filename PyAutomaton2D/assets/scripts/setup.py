@@ -66,3 +66,7 @@ def update():
 		sprite.transform.translate(0.0, 0.5)
 	elif (Input.getKey(Keyboard.KEY_P)):
 		print("Hallo Rens")
+		
+		
+		
+#DIT STOND ER EERST NIET IN!!!
