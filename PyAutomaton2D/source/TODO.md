@@ -13,3 +13,5 @@ TEMPORARY HACK:
 3. UPDATE the associated .xml file to set the width and height to the new, square, ^2 values
 4. ???
 5. Profit
+
+A NEW COMMIT
