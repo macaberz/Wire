@@ -66,7 +66,7 @@ public final class Core {
 	public static CoreState coreState;
 	public static Invocable pythonInvoke = (Invocable) python;
 	
-	private static StringBuilder assetFolder, audioFolder, scriptsFolder, texturesFolder;
+	public static String assetFolder, audioFolder, scriptsFolder, texturesFolder;
 	
 	public enum CoreState {
 		STARTED,
@@ -85,40 +85,40 @@ public final class Core {
 		int pyTargetFrameRate = 60;
 		String pyTitle = "Core Default Title";
 		
-		//The stringbuilders for the folders
-		assetFolder = new StringBuilder(64);
-		audioFolder = new StringBuilder(64);
-		scriptsFolder = new StringBuilder(64);
-		texturesFolder = new StringBuilder(64);
-		
-		assetFolder.append("assets/");
-		audioFolder.append(assetFolder);
-		audioFolder.append("audio/");
-		scriptsFolder.append(assetFolder);
-		scriptsFolder.append("scripts/");
-		texturesFolder.append(assetFolder);
-		texturesFolder.append("textures/");
-		
-		//Core.java will assume there is a file called setup.py in the scripts folder. If it is called differently, Core.java must be started through the commandline with
-		//the setup script filename as the first argument. Should no script be available, Core.java will start using hardcoded default values.
-		StringBuilder setupScriptFileName = new StringBuilder(64);
-		setupScriptFileName.append(scriptsFolder);
-		setupScriptFileName.append("setup.py");
+		assetFolder = "assets/";
+		audioFolder = assetFolder+"audio/";
+		scriptsFolder = assetFolder+"scripts/";
+		texturesFolder = assetFolder+"textures/";
 		
 		//TODO: Implement folder renaming through the commandline (see javadoc at the top)
 		try {
-			File setupScript = new File(setupScriptFileName.toString()); //or get args[1]
+			File setPathScript;
+			String os = System.getProperty("os.name").substring(0,7);
+			
+			if (os.equalsIgnoreCase("windows")) {
+				setPathScript = new File(scriptsFolder+"set_path_windows.py");
+			}
+			else {
+				setPathScript = new File(scriptsFolder+"set_path_mac.py");
+			}
+			
+			Reader setPathScriptReader = new FileReader(setPathScript);
+			python.eval(setPathScriptReader);
+			setPathScriptReader.close();
+			
+			File setupScript = new File(scriptsFolder+"setup.py"); //or get args[1]
 			Reader setupScriptReader = new FileReader (setupScript);
 			python.eval(setupScriptReader);
+			setupScriptReader.close();
 		} catch (IOException ioex) {
 			CoreLogger.log(Level.WARNING, String.format(
 					"Couldn't access the script %s. Please make sure it is located in the specified directory. Automaton will proceed loading using default values.",
-					setupScriptFileName.toString()));
+					"setup.py"));
 			Core.coreState = CoreState.SKIP_SETUP_SCRIPT;
 		} catch (ScriptException se) {
 			CoreLogger.log(Level.SEVERE, String.format(
-					"The scripts %s contains errors. Please make sure the script uses correct syntax and isn't using illegal operations.",
-					setupScriptFileName.toString()));
+					"The script %s contains errors. Please make sure the script uses correct syntax and isn't using illegal operations.",
+					"setup.py"));
 			CoreLogger.log(Level.SEVERE, "Core.java has encountered a severe error and has stopped.");
 			Core.coreState = CoreState.STOPPED;
 			se.printStackTrace();
@@ -180,19 +180,19 @@ public final class Core {
 	}
 	
 	public static String getAssetFolder() {
-		return Core.assetFolder.toString();
+		return Core.assetFolder;
 	}
 	
 	public static String getAudioFolder() {
-		return Core.audioFolder.toString();
+		return Core.audioFolder;
 	}
 	
 	public static String getScriptFolder() {
-		return Core.scriptsFolder.toString();
+		return Core.scriptsFolder;
 	}
 	
 	public static String getTextureFolder() {
-		return Core.texturesFolder.toString();
+		return Core.texturesFolder;
 	}
 	
 	private static void cleanup() {
@@ -200,6 +200,10 @@ public final class Core {
 		Keyboard.destroy();
 		Mouse.destroy();
 		System.exit(0);
+	}
+	
+	public static String getWorkingDirectory() {
+		return System.getProperty("user.dir");
 	}
 	
 }

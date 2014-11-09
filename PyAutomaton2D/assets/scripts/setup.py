@@ -1,17 +1,5 @@
-from sys import platform as _platform
-from sys import path as _path
-if _platform in ["linux", "linux2"]:
-    #do linux
-    pass
-if _platform == "darwin":
-    _path.append("/Users/renskloosterhuis/Documents/git/Wire/PyAutomaton2D/bin")
-    _path.append("/Users/renskloosterhuis/Documents/git/Wire/PyAutomaton2D/assets/scripts")
-if _platform == "win32":
-    _path.append("D:\\Projects\\Wire\\Wire\\PyAutomaton2D\\bin")
-    _path.append("D:\\Projects\\Wire\\Wire\\PyAutomaton2D\\assets\\scripts")
-
-
 from net.mmcprojects.automaton import Game
+from net.mmcprojects.automaton import Core
 from net.mmcprojects.automaton.entity import Entity
 from net.mmcprojects.automaton.entity import Sprite
 from net.mmcprojects.automaton.entity import Text
@@ -23,12 +11,16 @@ from net.mmcprojects.automaton import Input
 from org.lwjgl.input import Keyboard;
 
 from Assets import TextureUnpacker
+import os
 
 #GLOBAL variables, do NOT remove these.
 global width
 global height
 global title
 global targetFrameRate
+global scriptsFolder
+global texturesFolder
+global soundsFolder
 
 #Add additional global variables below this line
 global sprite
@@ -42,22 +34,29 @@ def init():
 	global height
 	global title
 	global targetFrameRate
+	global scriptsFolder
+	global texturesFolder
 	width = 800
 	height = 600
 	title = "Python Rocks!"
 	targetFrameRate = 60
-
+	cwd = Core.getWorkingDirectory().replace("\\", "/")
+	scriptsFolder = cwd+"/"+Core.getScriptFolder()
+	texturesFolder = cwd+"/"+Core.getTextureFolder()
+	soundsFolder = cwd+"/"+Core.getAudioFolder()
 
 def onGameStart():
 	global sprite
 	global text
+	global scriptsFolder
+	global texturesFolder
+	global soundsFolder
 
 	textPosition = Vector2f(100.0, 100.0)
 	textScale = Vector2f(1.0, 1.0)
 	textTransform = TransformComponent(textPosition, textScale, 0)
 	text = Text("texttag", "Hallo", "Times New Roman", textTransform)
-
-	tp = TextureUnpacker("/Users/renskloosterhuis/Documents/git/Wire/PyAutomaton2D/assets/textures/output.xml")
+	tp = TextureUnpacker(texturesFolder+"output.xml")
  	sprite = tp.getSprite("HUD_corner_bottom_left.png")
  	Game.addEntity(sprite)
  	Game.addEntity(text)
@@ -75,7 +74,3 @@ def update():
 		sprite.transform.translate(0.0, 0.5)
 	elif (Input.getKey(Keyboard.KEY_P)):
 		print("Hallo Rens")
-		
-		
-		
-#DIT STOND ER EERST NIET IN!!!
