@@ -1,5 +1,4 @@
-/.classpath
-/.project
+.classpath
 # eclipse specific git ignore
 *.pydevproject
 .project
