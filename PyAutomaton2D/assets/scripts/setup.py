@@ -1,6 +1,15 @@
-import sys.path as path
-path.append("/Users/renskloosterhuis/Documents/git/Wire/PyAutomaton2D/bin")
-path.append("/Users/renskloosterhuis/Documents/git/Wire/PyAutomaton2D/assets/scripts")
+from sys import platform as _platform
+from sys import path as _path
+if _platform in ["linux", "linux2"]:
+    #do linux
+    pass
+if _platform == "darwin":
+    _path.append("/Users/renskloosterhuis/Documents/git/Wire/PyAutomaton2D/bin")
+    _path.append("/Users/renskloosterhuis/Documents/git/Wire/PyAutomaton2D/assets/scripts")
+if _platform == "win32":
+    _path.append("D:\\Projects\\Wire\\Wire\\PyAutomaton2D\\bin")
+    _path.append("D:\\Projects\\Wire\\Wire\\PyAutomaton2D\\assets\\scripts")
+
 
 from net.mmcprojects.automaton import Game
 from net.mmcprojects.automaton.entity import Entity
