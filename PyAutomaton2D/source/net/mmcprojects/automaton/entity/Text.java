@@ -9,7 +9,7 @@ import net.mmcprojects.automaton.textures.FontManager;
 public class Text extends Entity {
 
 	private TrueTypeFont ttfont;
-	private TransformComponent transform;
+	public TransformComponent transform;
 	private String text;
 	
 	public Text(String tag, String text, String fontName, TransformComponent transform) {

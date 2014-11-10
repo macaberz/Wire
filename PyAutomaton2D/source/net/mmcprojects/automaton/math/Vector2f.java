@@ -54,10 +54,12 @@ public class Vector2f
 		return m_x * r.getY() - m_y * r.getX();
 	}
 
+	/*
 	public Vector2f lerp(Vector2f dest, float lerpFactor)
 	{
 		return dest.sub(this).mul(lerpFactor).add(this);
 	}
+	*/
 
 	public Vector2f rotate(float angle)
 	{
@@ -68,44 +70,52 @@ public class Vector2f
 		return new Vector2f((float)(m_x * cos - m_y * sin),(float)(m_x * sin + m_y * cos));
 	}
 	
-	public Vector2f add(Vector2f r)
+	public void add(Vector2f r)
 	{
-		return new Vector2f(m_x + r.getX(), m_y + r.getY());
+		this.m_x += r.getX();
+		this.m_y += r.getY();
 	}
 	
-	public Vector2f add(float r)
+	public void add(float r)
 	{
-		return new Vector2f(m_x + r, m_y + r);
+		this.m_x += r;
+		this.m_y += r;
 	}
 	
-	public Vector2f sub(Vector2f r)
+	public void sub(Vector2f r)
 	{
-		return new Vector2f(m_x - r.getX(), m_y - r.getY());
+		this.m_x -= r.getX();
+		this.m_y -= r.getY();
 	}
 	
-	public Vector2f sub(float r)
+	public void sub(float r)
 	{
-		return new Vector2f(m_x - r, m_y - r);
+		this.m_x -= r;
+		this.m_y -= r;
 	}
 	
-	public Vector2f mul(Vector2f r)
+	public void mul(Vector2f r)
 	{
-		return new Vector2f(m_x * r.getX(), m_y * r.getY());
+		this.m_x *= r.getX();
+		this.m_y *= r.getY();
 	}
 	
-	public Vector2f mul(float r)
+	public void mul(float r)
 	{
-		return new Vector2f(m_x * r, m_y * r);
+		this.m_x *= r;
+		this.m_y *= r;
 	}
 	
-	public Vector2f div(Vector2f r)
+	public void div(Vector2f r)
 	{
-		return new Vector2f(m_x / r.getX(), m_y / r.getY());
+		this.m_x /= r.getX();
+		this.m_y /= r.getY();
 	}
 	
-	public Vector2f div(float r)
+	public void div(float r)
 	{
-		return new Vector2f(m_x / r, m_y / r);
+		this.m_x /= r;
+		this.m_y /= r;
 	}
 	
 	public Vector2f abs()
@@ -118,8 +128,8 @@ public class Vector2f
 		return "(" + m_x + " " + m_y + ")";
 	}
 
-	public Vector2f set(float x, float y) { this.m_x = x; this.m_y = y; return this; }
-	public Vector2f set(Vector2f r) { set(r.getX(), r.getY()); return this; }
+	public void set(float x, float y) { this.m_x = x; this.m_y = y; }
+	public void set(Vector2f r) { set(r.getX(), r.getY()); }
 
 	public float getX()
 	{

@@ -29,4 +29,8 @@ public abstract class Entity implements IUpdateRender {
 	public String toString() {
 		return String.format("Entity #%d", this.entityID);
 	}
+	
+	public int getId() {
+		return this.entityID;
+	}
 }

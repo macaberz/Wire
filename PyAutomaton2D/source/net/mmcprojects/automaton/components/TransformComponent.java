@@ -1,10 +1,6 @@
 package net.mmcprojects.automaton.components;
 
-import net.mmcprojects.automaton.Automaton2D;
 import net.mmcprojects.automaton.math.Vector2f;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glTranslatef;
 
 public class TransformComponent {
 	private Vector2f position;
@@ -50,5 +46,23 @@ public class TransformComponent {
 	
 	public void scale (Vector2f scalar) {
 		this.scale.mul(scalar);
+	}
+	
+	public void set(TransformComponent transform) {
+		this.position = transform.getPosition();
+		this.scale = transform.getScale();
+		this.angle = transform.getAngle();
+	}
+	
+	public TransformComponent get() {
+		return this;
+	}
+	
+	public void setPosition(Vector2f position) {
+		this.position.set(position);
+	}
+	
+	public void setPosition(float x, float y) {
+		this.position.set(x, y);
 	}
 }

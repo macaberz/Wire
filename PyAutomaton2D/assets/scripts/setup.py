@@ -11,31 +11,21 @@ from net.mmcprojects.automaton import Input
 from org.lwjgl.input import Keyboard;
 
 from Assets import TextureUnpacker
-import os
+import random
 
 #GLOBAL variables, do NOT remove these.
-global width
-global height
-global title
-global targetFrameRate
-global scriptsFolder
-global texturesFolder
-global soundsFolder
+global width, height, title, targetFrameRate, scriptsFolder, texturesFolder, soundsFolder
 
 #Add additional global variables below this line
-global sprite
+global sprites
+sprites = []
 global text
 
 def init():
 	#DO NOT change the contents of this method.
 	#only adjust the values assigned to the variables
 	#to your liking.
-	global width
-	global height
-	global title
-	global targetFrameRate
-	global scriptsFolder
-	global texturesFolder
+	global width, height, title, targetFrameRate, scriptsFolder, texturesFolder, soundsFolder
 	width = 800
 	height = 600
 	title = "Python Rocks!"
@@ -46,31 +36,38 @@ def init():
 	soundsFolder = cwd+"/"+Core.getAudioFolder()
 
 def onGameStart():
-	global sprite
+	global sprites
 	global text
 	global scriptsFolder
 	global texturesFolder
 	global soundsFolder
+	global width, height
 
 	textPosition = Vector2f(100.0, 100.0)
 	textScale = Vector2f(1.0, 1.0)
 	textTransform = TransformComponent(textPosition, textScale, 0)
 	text = Text("texttag", "Hallo", "Times New Roman", textTransform)
 	tp = TextureUnpacker(texturesFolder+"output.xml")
- 	sprite = tp.getSprite("HUD_corner_bottom_left.png")
- 	Game.addEntity(sprite)
+	for i in range(0,10):
+ 		sprites.append(tp.getNewSprite("HUD_corner_bottom_left.png"))
+ 		sprites[i].transform.setPosition(random.uniform(1, 400), random.uniform(1, 400))
+ 		Game.addEntity(sprites[i])
  	Game.addEntity(text)
 
 def update():
-	global sprite
-	global text
-	if (Input.getKey(Keyboard.KEY_D)):
-		sprite.transform.translate(4.0, 0.0)
-	elif (Input.getKey(Keyboard.KEY_A)):
-		sprite.transform.translate(-0.5, 0.0)
-	elif (Input.getKey(Keyboard.KEY_W)):
-		sprite.transform.translate(0.0, -0.5)
-	elif (Input.getKey(Keyboard.KEY_S)):
-		sprite.transform.translate(0.0, 0.5)
-	elif (Input.getKey(Keyboard.KEY_P)):
-		print("Hallo Rens")
+	global sprites
+#	global text
+
+	tx = 0.2
+	ty = 0.2
+
+	#if (Input.getKey(Keyboard.KEY_D)):
+	#	tx = 4.0
+	#elif (Input.getKey(Keyboard.KEY_A)):
+	#	tx = -4.0
+	#elif (Input.getKey(Keyboard.KEY_W)):
+	#	ty = -4.0
+	#elif (Input.getKey(Keyboard.KEY_S)): 
+	#	ty = 4.0
+	for spr in sprites:
+		spr.transform.translate(tx, ty);

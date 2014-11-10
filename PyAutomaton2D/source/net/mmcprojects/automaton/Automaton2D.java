@@ -47,6 +47,8 @@ public class Automaton2D implements ICleanup {
 		Automaton2DLogger.log(Level.INFO, "The Automaton2D Engine has woken up.");
 		lastFps = getTime();
 		this.targetFrameRate = targetFrameRate;
+		getDelta();
+		System.gc();
 	}
 	
 	public void engineLoop() {

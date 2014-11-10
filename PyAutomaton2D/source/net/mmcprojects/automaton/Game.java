@@ -22,10 +22,10 @@ import net.mmcprojects.automaton.textures.TextureManager;
  */
 public class Game implements ICleanup {
 	private static Logger GameLogger = Logger.getLogger(Game.class.getName());
-	private static ArrayList<Integer> vertexBufferObjectHandles = new ArrayList<Integer>();
+	private static ArrayList<Integer> vertexBufferObjectHandles = new ArrayList<Integer>(1024);
 	private ArrayList<Entity> entities = new ArrayList<>(); 
-	private static ArrayList<Entity> entityAddQueue = new ArrayList<Entity>();
-	private static ArrayList<Entity> entityRemoveQueue = new ArrayList<Entity>();
+	private static ArrayList<Entity> entityAddQueue = new ArrayList<Entity>(8);
+	private static ArrayList<Entity> entityRemoveQueue = new ArrayList<Entity>(8);
 	
 	private static Input input;
 	private GameState gameState = GameState.GAME_NOT_YET_STARTED;
@@ -37,8 +37,6 @@ public class Game implements ICleanup {
 	public Game() {
 		textureManager = TextureManager.getInstance();
 		fontManager = FontManager.getInstance();
-		
-		
 		try {
 			Core.pythonInvoke.invokeFunction("onGameStart");
 		} catch (NoSuchMethodException nsme) {

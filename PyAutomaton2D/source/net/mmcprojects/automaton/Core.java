@@ -62,7 +62,7 @@ public final class Core {
 	private static Automaton2D engineInstance;
 	private static Game gameInstance;
 	public static ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-	public static ScriptEngine python = scriptEngineManager.getEngineByName("jython");
+	public static ScriptEngine python = scriptEngineManager.getEngineByName("python");
 	public static CoreState coreState;
 	public static Invocable pythonInvoke = (Invocable) python;
 	
@@ -109,7 +109,12 @@ public final class Core {
 			File setupScript = new File(scriptsFolder+"setup.py"); //or get args[1]
 			Reader setupScriptReader = new FileReader (setupScript);
 			python.eval(setupScriptReader);
+			
+			//cleanup
 			setupScriptReader.close();
+			setupScriptReader = null;
+			setupScript = null;
+			
 		} catch (IOException ioex) {
 			CoreLogger.log(Level.WARNING, String.format(
 					"Couldn't access the script %s. Please make sure it is located in the specified directory. Automaton will proceed loading using default values.",
@@ -173,7 +178,6 @@ public final class Core {
 		
 		gameInstance = new Game();
 		engineInstance = new Automaton2D(gameInstance, pyTargetFrameRate);
-		Automaton2D.getDelta();
 		engineInstance.engineLoop();
 		engineInstance.cleanup();
 		Core.cleanup();

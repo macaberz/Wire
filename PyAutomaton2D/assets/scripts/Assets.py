@@ -9,7 +9,12 @@ class TextureUnpacker:
 	def getSprite(self, spriteTag):
 		spr = [s for s in self._sprites if s.getTag() == spriteTag]
 		return spr[0]
-
+	
+	def getNewSprite(self, spriteTag):
+		spr = [s for s in self._sprites if s.getTag() == spriteTag]
+		s = Sprite(spriteTag, spr[0].texture.atlas, spr[0].texture.region, TransformComponent(Vector2f(spr[0].transform.getPosition().getX(), spr[0].transform.getPosition().getY()), Vector2f(spr[0].transform.getScale().getX(), spr[0].transform.getScale().getY()),0))
+		return s
+		
 	def __init__(self, textureXMLFile):
 		self.spriteNames = []
 		self.spriteWidth = []
@@ -19,7 +24,8 @@ class TextureUnpacker:
 		self._sprites = []
 
 		self.textureXMLFile = textureXMLFile
-		self.xmldoc = minidom.parse(textureXMLFile)
+		filehandle = open(textureXMLFile, 'r')
+		self.xmldoc = minidom.parse(filehandle)
 		lst = self.xmldoc.getElementsByTagName('TextureAtlas')
 		self.textureFile = lst[0].attributes['imagePath'].value
 		self.textureFileWidth = int(lst[0].attributes['width'].value)
@@ -42,3 +48,4 @@ class TextureUnpacker:
 			transform = TransformComponent(position, scale, 0)
 			sprite = Sprite(sprname, self.textureFile, region, transform)
 			self._sprites.append(sprite)
+		filehandle.close()

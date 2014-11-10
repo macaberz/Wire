@@ -22,9 +22,12 @@ public final class TextureAtlas {
 			this.Atlas = TextureLoader.getTexture(fn[1], fis);
 			this.TextureWidth = this.Atlas.getImageWidth();
 			this.TextureHeight = this.Atlas.getImageHeight();
+			fis.close();
+			fis = null;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		file = null;
 	}
 	
 	public int getTextureWidth() {

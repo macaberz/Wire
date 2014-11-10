@@ -19,8 +19,8 @@ import static org.lwjgl.opengl.GL11.glTranslatef;
 import static org.lwjgl.opengl.GL11.glScalef;
 
 public final class TextureComponent {
-	private TextureRegion region;
-	private TextureAtlas atlas;
+	public TextureRegion region;
+	public TextureAtlas atlas;
 
 	public TextureComponent(TextureAtlas atlas, TextureRegion region) {
 		this.region = region;
