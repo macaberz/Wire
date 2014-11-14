@@ -13,6 +13,8 @@ import org.lwjgl.opengl.GL11;
 import net.mmcprojects.automaton.entity.Entity;
 import net.mmcprojects.automaton.textures.FontManager;
 import net.mmcprojects.automaton.textures.TextureManager;
+import net.mmcprojects.automaton.tilemap.Layer;
+import net.mmcprojects.automaton.tilemap.LayerManager;
 
 /**
  * 
@@ -23,9 +25,8 @@ import net.mmcprojects.automaton.textures.TextureManager;
 public class Game implements ICleanup {
 	private static Logger GameLogger = Logger.getLogger(Game.class.getName());
 	private static ArrayList<Integer> vertexBufferObjectHandles = new ArrayList<Integer>(1024);
-	private ArrayList<Entity> entities = new ArrayList<>(); 
-	private static ArrayList<Entity> entityAddQueue = new ArrayList<Entity>(8);
-	private static ArrayList<Entity> entityRemoveQueue = new ArrayList<Entity>(8);
+	
+	private LayerManager layerManager = LayerManager.getInstance();
 	
 	private static Input input;
 	private GameState gameState = GameState.GAME_NOT_YET_STARTED;
@@ -57,16 +58,7 @@ public class Game implements ICleanup {
 	}
 	
 	public void update(int delta) {
-		//Dynamically allocate/de-allocate entities
-		if (entityRemoveQueue.size() != 0) {
-			entities.removeAll(entityRemoveQueue);
-			entityRemoveQueue.clear();
-		}
-		
-		if (entityAddQueue.size() != 0) {
-			entities.addAll(entityAddQueue);
-			entityAddQueue.clear();
-		}
+
 		
 		//Clear the screen
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
@@ -82,10 +74,7 @@ public class Game implements ICleanup {
 			System.exit(1);
 		}
 		
-		for(Entity e: entities) {
-			e.update(delta);
-			e.render();
-		}
+		layerManager.update(delta);
 	}
 	
 	public GameState getGameState() {
@@ -117,13 +106,5 @@ public class Game implements ICleanup {
 		for (int handle : vertexBufferObjectHandles) {
 			glDeleteBuffers(handle);
 		}
-	}
-	
-	public synchronized static void addEntity(Entity e) {
-		entityAddQueue.add(e);
-	}
-	
-	public synchronized static void removeEntity(Entity e) {
-		entityRemoveQueue.add(e);
 	}
 }

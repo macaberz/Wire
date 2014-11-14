@@ -1,3 +1,5 @@
+0. IMPLEMENT TILEMAPPING!!
+	a. With layer support, ofc! :D 
 1. Support colored text
 2. Sprite object factory pattern. Right now making a sprite in python takes 5 lines of code, I want it to be one.
 Perhaps the best, long-term solution is to write/use a TexturePacker that also generates a TextureRegion files for each atlas.

@@ -48,7 +48,7 @@ def onGameStart():
 	textTransform = TransformComponent(textPosition, textScale, 0)
 	text = Text("texttag", "Hallo", "Times New Roman", textTransform)
 	tp = TextureUnpacker(texturesFolder+"output.xml")
-	for i in range(0,10):
+	for i in range(0,25):
  		sprites.append(tp.getNewSprite("HUD_corner_bottom_left.png"))
  		sprites[i].transform.setPosition(random.uniform(1, 400), random.uniform(1, 400))
  		Game.addEntity(sprites[i])
